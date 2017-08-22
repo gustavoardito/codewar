@@ -30,12 +30,6 @@ def list_to_num(lst):
     return num
 
 
-def get_permutations(num):
-    """get perms"""
-    perms = [list_to_num(p) for p in permutations(num)]
-    return perms
-
-
 def exclude_lowers(num, values):
     """filter list"""
     return [val for val in values if val > num]
@@ -44,7 +38,7 @@ def exclude_lowers(num, values):
 def next_bigger(num):
     """return next bigger number"""
     num_list = num_to_list(num)
-    results = get_permutations(num_list)
+    results = [list_to_num(p) for p in permutations(num_list)]
     filtered_results = exclude_lowers(num, results)
 
     if filtered_results:
