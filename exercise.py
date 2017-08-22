@@ -12,43 +12,41 @@ next_bigger(111)==-1
 next_bigger(531)==-1
 TIP: run -> python -c 'import exercise; print exercise.next_bigger(5)'
 """
+from itertools import permutations
 
 
-def get_digit(num):
-    """return 1st digit"""
-    max_pow = len(str(num))
-    if max_pow <= 1:
-        return -1, 0
-    ponderation = 10 ** (max_pow - 1)
-    rest_part = num % ponderation
-    main_number = num - rest_part
-    return main_number / ponderation, rest_part
+def num_to_list(num):
+    """return number as list"""
+    return [int(c) for c in list(str(num))]
 
 
-def create_number(num_list):
-    """return number from digit list"""
-    number = 0
-    if num_list:
-        max_pow = len(num_list) - 1
-        for num in num_list:
-            number += num * 10**max_pow
-            max_pow -= 1
-    return -1 if number == 0 else number
+def list_to_num(lst):
+    """join ponderate numbers"""
+    exp = len(lst) - 1
+    num = 0
+    for val in lst:
+        num += val * 10**exp
+        exp -= 1
+    return num
+
+
+def get_permutations(num):
+    """get perms"""
+    perms = [list_to_num(p) for p in permutations(num)]
+    return perms
+
+
+def exclude_lowers(num, values):
+    """filter list"""
+    return [val for val in values if val > num]
 
 
 def next_bigger(num):
     """return next bigger number"""
-    digits = []
-    while True:
-        first_digit, rest = get_digit(num)
-        if first_digit == -1 or rest == 0:
-            if digits:
-                digits.append(num)
-            break
-        # print "{0} {1}".format(first_digit, rest)
-        num = rest
-        digits.append(first_digit)
-    sorted_list = sorted(digits, reverse=True)
-    if digits == sorted_list:
-        return -1
-    return create_number(sorted_list)
+    num_list = num_to_list(num)
+    results = get_permutations(num_list)
+    filtered_results = exclude_lowers(num, results)
+
+    if filtered_results:
+        return min(filtered_results)
+    return -1
