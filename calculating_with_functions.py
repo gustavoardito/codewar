@@ -16,29 +16,6 @@
 
 # eight(divided_by(three()))
 
-import inspect
-
-
-NUMBERS = {
-    'zero': 0,
-    'one': 1,
-    'two': 2,
-    'three': 3,
-    'four': 4,
-    'five': 5,
-    'six': 6,
-    'seven': 7,
-    'eight': 8,
-    'nine': 9,
-}
-
-OPERATORS = {
-    'plus',
-    'minus',
-    'times',
-    'divided_by',
-}
-
 
 def zero(operator_tuple=None):
     return _build_result(0, operator_tuple)
@@ -80,43 +57,20 @@ def nine(operator_tuple=None):
     return _build_result(9, operator_tuple)
 
 
-def _build_result(a_value, operator_tuple):
-    if operator_tuple is None:
-        return a_value
-    operation, b_value = operator_tuple
-    return operation(a_value, b_value)
+def _build_result(a_value, operation):
+    return a_value if operation is None else operation(a_value)
 
 
-def _sumar(a, b):
-    return a + b
+def plus(y): return lambda x: x+y
 
 
-def _restar(a, b):
-    return a - b
+def minus(y): return lambda x: x-y
 
 
-def _multiplicar(a, b):
-    return a * b
+def times(y): return lambda x: x*y
 
 
-def _dividir(a, b):
-    return a // b
-
-
-def plus(b_value):
-    return (_sumar, b_value)
-
-
-def minus(b_value):
-    return (_restar, b_value)
-
-
-def times(b_value):
-    return (_multiplicar, b_value)
-
-
-def divided_by(b_value):
-    return (_dividir, b_value)
+def divided_by(y): return lambda x: x//y
 
 
 print(seven(plus(one())))
