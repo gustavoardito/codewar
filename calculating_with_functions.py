@@ -53,8 +53,8 @@ def eight(operator_tuple=None):
     return _build_result(8, operator_tuple)
 
 
-def nine(operator_tuple=None):
-    return _build_result(9, operator_tuple)
+def nine(operation=None):
+    return _build_result(9, operation)
 
 
 def _build_result(a_value, operation):
